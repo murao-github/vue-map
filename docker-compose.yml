@@ -7,3 +7,5 @@ services:
       - "8080:8080"
     # Keep booting
     tty: true
+    volumes:
+      - .:/usr/src/app

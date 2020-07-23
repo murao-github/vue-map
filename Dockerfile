@@ -1,12 +1,20 @@
 # baseimage is node.js 12.18.2
 FROM node:12.18.2
 
-# アプリケーションディレクトリを作成する
+# apt-get update and install
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y \
+    sudo \
+    nano
+
+# create app directory
 WORKDIR /usr/src/app
 
-# package.json と package-lock.json をコピー
+# copy package.json and package-lock.json
 COPY package*.json ./
 
-# 本番用にコードを作成している場合
 # RUN npm install --only=production
-RUN npm install
+RUN sudo npm install 
+
+# set environment variable path
+ENV PATH $PATH:/usr/src/app/node_modules/.bin
